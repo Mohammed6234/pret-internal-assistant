@@ -487,6 +487,7 @@ git commit -m "feat: add role-aware retrieval demo"
 
 **Files:**
 - Replace: `README.md`
+- Delete: `.gitignore` after the isolated worktree is no longer needed for implementation
 - Delete: `pret_assistant/__init__.py`
 - Delete: `pret_assistant/answer.py`
 - Delete: `pret_assistant/evaluation.py`
