@@ -1,0 +1,42 @@
+[
+  {
+    "doc_id": "ops-equipment-uk-v1",
+    "title": "UK store equipment reporting procedure",
+    "content": "For a faulty display fridge, make the area safe, tell the shift leader, record the store number and equipment details, and raise a maintenance request through the approved maintenance process. If food may be unsafe, stop using the equipment and contact the duty manager immediately.",
+    "market": "UK",
+    "allowed_groups": ["store-colleague", "store-manager", "operations-support"],
+    "allowed_store_ids": [],
+    "sensitivity": "internal",
+    "version": "1.0"
+  },
+  {
+    "doc_id": "ops-equipment-manager-only-v1",
+    "title": "Manager-only equipment escalation thresholds",
+    "content": "Managers should use the escalation threshold for repeated equipment faults and coordinate the regional maintenance response.",
+    "market": "UK",
+    "allowed_groups": ["store-manager", "operations-support"],
+    "allowed_store_ids": [],
+    "sensitivity": "restricted",
+    "version": "1.0"
+  },
+  {
+    "doc_id": "hr-absence-uk-v1",
+    "title": "UK colleague absence reporting procedure",
+    "content": "If you cannot attend a shift, notify the appropriate store contact as soon as possible and follow the approved absence reporting process.",
+    "market": "UK",
+    "allowed_groups": ["store-colleague", "store-manager", "hr-support"],
+    "allowed_store_ids": [],
+    "sensitivity": "internal",
+    "version": "1.0"
+  },
+  {
+    "doc_id": "hr-confidential-casework-v1",
+    "title": "Confidential HR casework guidance",
+    "content": "Confidential HR casework must be handled by the authorised HR support process and should not be disclosed through a general colleague service.",
+    "market": "UK",
+    "allowed_groups": ["hr-support"],
+    "allowed_store_ids": [],
+    "sensitivity": "confidential",
+    "version": "1.0"
+  }
+]
