@@ -1,10 +1,10 @@
 [
   {
     "id": "OPS-001",
-    "title": "Faulty equipment reporting",
+    "title": "Faulty fridge reporting",
     "answer": "Make the area safe, tell the shift leader, record the store and equipment details, then use the approved maintenance request process.",
     "url": "https://pret.example/documents/OPS-001",
-    "keywords": ["faulty", "fridge", "equipment", "maintenance", "report"],
+    "keywords": ["faulty", "fridge", "maintenance", "report"],
     "roles": ["Store colleague", "Store manager"]
   },
   {

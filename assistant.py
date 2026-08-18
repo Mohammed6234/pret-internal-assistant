@@ -7,7 +7,6 @@ from pathlib import Path
 
 ROLES = ("Store colleague", "Store manager")
 STOP_WORDS = {"a", "an", "and", "are", "do", "for", "how", "i", "is", "that", "the", "to", "what"}
-MIN_MATCH_RATIO = 0.5
 
 
 @dataclass(frozen=True)
@@ -73,7 +72,7 @@ def _ranked_documents(question: str, documents: list[Document]) -> list[Document
             keyword.casefold() for keyword in document.keywords
         }
         score = len(question_tokens & metadata_tokens)
-        if score / len(question_tokens) >= MIN_MATCH_RATIO:
+        if score:
             scored.append((score, document.id, document))
     return [item[2] for item in sorted(scored, key=lambda item: (-item[0], item[1]))]
 
