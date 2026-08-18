@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace the broad assistant repository with a six-file Streamlit prototype implementing only access control followed by permission-aware retrieval and a grounded response.
+**Goal:** Replace the broad assistant repository with a six-file Streamlit application plus the existing `.gitignore`, implementing only access control followed by permission-aware retrieval and a grounded response.
 
 **Architecture:** `app.py` is a thin Streamlit interface. `assistant.py` loads synthetic document metadata, matches a question, checks the selected role before reading protected fields, and returns one of three immutable outcomes: answer, access denied, or information unavailable with a prepared agent-case preview. The backend is deterministic and credential-free; it does not call a model, create a real case, or implement any other architecture block.
 
@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - Implement exactly two consecutive blocks: `Access control → Permission-aware retrieval and grounded response`.
-- Final interviewer-facing repository files are only `app.py`, `assistant.py`, `data/knowledge.json`, `tests/test_assistant.py`, `requirements.txt`, and `README.md`.
+- Final interviewer-facing application files are only `app.py`, `assistant.py`, `data/knowledge.json`, `tests/test_assistant.py`, `requirements.txt`, and `README.md`; retain the existing `.gitignore` as repository hygiene.
 - Use only synthetic guidance and links under `https://pret.example/`.
 - `Store colleague` and `Store manager` are the only accepted roles.
 - Never expose restricted answer text, document ID, URL, or snippets in an access-denied result.
@@ -487,7 +487,6 @@ git commit -m "feat: add role-aware retrieval demo"
 
 **Files:**
 - Replace: `README.md`
-- Delete: `.gitignore` after the isolated worktree is no longer needed for implementation
 - Delete: `pret_assistant/__init__.py`
 - Delete: `pret_assistant/answer.py`
 - Delete: `pret_assistant/evaluation.py`
@@ -570,6 +569,7 @@ Use explicit patch deletions. Confirm the remaining inventory with `rg --files |
 Expected:
 
 ```text
+.gitignore
 README.md
 app.py
 assistant.py
@@ -606,7 +606,7 @@ rg --files | sort
 git status --short
 ```
 
-Verify that only the six expected files remain, no credentials or cache files exist, and the diff contains no unrelated changes.
+Verify that only the six expected application files and `.gitignore` remain, no credentials or cache files exist, and the diff contains no unrelated changes.
 
 - [ ] **Step 6: Commit the final scoped repository**
 

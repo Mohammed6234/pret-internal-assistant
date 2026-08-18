@@ -30,6 +30,7 @@ Production equivalents can be discussed without being implemented:
 The interviewer-facing repository contains only:
 
 ```text
+.gitignore
 app.py
 assistant.py
 data/knowledge.json
@@ -38,7 +39,7 @@ requirements.txt
 README.md
 ```
 
-The existing `pret_assistant/` package, `evals/` directory, old tests, and development-only design and implementation-plan documents are removed before final handoff because they implement or describe responsibilities outside the selected slice.
+The existing `pret_assistant/` package, `evals/` directory, old tests, and development-only design and implementation-plan documents are removed before final handoff because they implement or describe responsibilities outside the selected slice. The existing `.gitignore` is retained as normal repository hygiene and gains the isolated-worktree entry used during implementation.
 
 ## User interface
 
@@ -186,7 +187,7 @@ These remain part of the architecture discussion. Excluding them is the central 
 
 ## Acceptance criteria
 
-- The final interviewer-facing repository contains only the six agreed files plus normal Git metadata; development-only design and plan documents are removed during final cleanup.
+- The final interviewer-facing repository contains only the six agreed application files, the existing `.gitignore`, and normal Git metadata; development-only design and plan documents are removed during final cleanup.
 - The UI accepts arbitrary questions and provides five clickable suggestions.
 - Switching the role changes the outcome of the manager-only question.
 - Allowed answers include a document ID and link.
