@@ -41,8 +41,3 @@ python -m unittest discover -s tests -v
 - Local metadata matching represents an Azure AI Search index or Copilot Studio knowledge source with security trimming.
 - A production model may generate wording only after permitted evidence is retrieved.
 
-## Scope
-
-This repository does not implement Copilot Studio, a live model, prompt guardrails, tool calling, case creation, orchestration, telemetry or deployment. Those belong to the wider design; excluding them is intentional.
-
-All guidance and links are synthetic demonstration data, not official Pret policy.
