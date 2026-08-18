@@ -1,3 +1,4 @@
+import logging
 import unittest
 from pathlib import Path
 
@@ -6,6 +7,15 @@ from streamlit.testing.v1 import AppTest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_RUN_CONTEXT_LOGGER = "streamlit.runtime.scriptrunner_utils.script_run_context"
+
+
+class MissingScriptRunContextFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return not (
+            record.name == SCRIPT_RUN_CONTEXT_LOGGER
+            and "missing ScriptRunContext!" in record.getMessage()
+        )
 
 
 class AssistantTests(unittest.TestCase):
@@ -106,6 +116,16 @@ class AssistantTests(unittest.TestCase):
 
 
 class AppTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.script_run_context_logger = logging.getLogger(SCRIPT_RUN_CONTEXT_LOGGER)
+        cls.missing_context_filter = MissingScriptRunContextFilter()
+        cls.script_run_context_logger.addFilter(cls.missing_context_filter)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.script_run_context_logger.removeFilter(cls.missing_context_filter)
+
     def test_role_change_changes_manager_question_outcome(self) -> None:
         app = AppTest.from_file(ROOT / "app.py").run()
 
