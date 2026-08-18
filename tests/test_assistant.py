@@ -114,6 +114,18 @@ class AssistantTests(unittest.TestCase):
 
         self.assertEqual(result.document_id, "AAA")
 
+    def test_permitted_match_is_selected_when_restricted_match_sorts_first(self) -> None:
+        tied = [
+            Document("AAA", "Fridge help", "Restricted", "https://pret.example/AAA", ("fridge",), ("Store manager",)),
+            Document("ZZZ", "Fridge help", "Permitted", "https://pret.example/ZZZ", ("fridge",), ("Store colleague",)),
+        ]
+
+        result = answer_question("fridge", "Store colleague", tied)
+
+        self.assertEqual(result.status, "answer")
+        self.assertEqual(result.document_id, "ZZZ")
+        self.assertEqual(result.message, "Permitted")
+
 
 class AppTests(unittest.TestCase):
     @classmethod

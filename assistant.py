@@ -7,6 +7,7 @@ from pathlib import Path
 
 ROLES = ("Store colleague", "Store manager")
 STOP_WORDS = {"a", "an", "and", "are", "do", "for", "how", "i", "is", "that", "the", "to", "what"}
+MIN_MATCH_RATIO = 0.5
 
 
 @dataclass(frozen=True)
@@ -63,13 +64,16 @@ def _tokens(text: str) -> set[str]:
 
 def _ranked_documents(question: str, documents: list[Document]) -> list[Document]:
     question_tokens = _tokens(question)
+    if not question_tokens:
+        return []
+
     scored = []
     for document in documents:
         metadata_tokens = _tokens(document.title) | {
             keyword.casefold() for keyword in document.keywords
         }
         score = len(question_tokens & metadata_tokens)
-        if score:
+        if score / len(question_tokens) >= MIN_MATCH_RATIO:
             scored.append((score, document.id, document))
     return [item[2] for item in sorted(scored, key=lambda item: (-item[0], item[1]))]
 
@@ -98,13 +102,14 @@ def answer_question(question: str, role: str, documents: list[Document]) -> Resu
             ),
         )
 
-    document = ranked[0]
-    if role not in document.roles:
+    permitted = [document for document in ranked if role in document.roles]
+    if not permitted:
         return Result(
             status="access_denied",
             message="Sorry, you do not have the correct access level. Ask your manager to make this request.",
         )
 
+    document = permitted[0]
     return Result(
         status="answer",
         message=document.answer,
