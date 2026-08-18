@@ -2,6 +2,7 @@ import unittest
 from pathlib import Path
 
 from assistant import Document, answer_question, load_documents
+from streamlit.testing.v1 import AppTest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -102,6 +103,30 @@ class AssistantTests(unittest.TestCase):
         result = answer_question("fridge", "Store colleague", tied)
 
         self.assertEqual(result.document_id, "AAA")
+
+
+class AppTests(unittest.TestCase):
+    def test_role_change_changes_manager_question_outcome(self) -> None:
+        app = AppTest.from_file(ROOT / "app.py").run()
+
+        self.assertEqual(len(app.exception), 0)
+        self.assertEqual(len(app.button), 5)
+        self.assertEqual(len(app.chat_input), 1)
+        app.button(key="suggestion-2").click().run()
+        self.assertIn("correct access level", app.warning[0].value)
+
+        app.selectbox(key="role").select("Store manager").run()
+        self.assertIn("manager escalation route", app.success[0].value)
+
+    def test_unsupported_question_reveals_case_only_after_confirmation(self) -> None:
+        app = AppTest.from_file(ROOT / "app.py").run()
+        app.button(key="suggestion-5").click().run()
+
+        self.assertIn("talk to an agent", app.info[0].value.casefold())
+        self.assertEqual(len(app.json), 0)
+        app.button(key="talk-to-agent").click().run()
+        self.assertEqual(len(app.json), 1)
+        self.assertIn("CASE-", str(app.json[0].value))
 
 
 if __name__ == "__main__":
